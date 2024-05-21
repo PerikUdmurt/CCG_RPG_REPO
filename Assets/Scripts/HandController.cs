@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
-using CollectionCardGame.Infrastructure;
 
 namespace CollectionCardGame.Gameplay
 {
     public class HandController : MonoBehaviour
     {
+        [SerializeField] private float _useTriggerTime;
         [SerializeField] private LayerMask _usableLayer;
         [SerializeField] private Camera _camera => Camera.main;
 
@@ -13,6 +14,7 @@ namespace CollectionCardGame.Gameplay
         public bool dragIsAvailable = true;
         public bool useIsAvailable = true;
         public bool selectIsAvailable = true;
+        private bool _useTrigger = false;
 
         private void Update()
         {
@@ -24,14 +26,16 @@ namespace CollectionCardGame.Gameplay
         
         private void RayCheck()
         {
+            if (Input.GetMouseButtonDown(0)) { StartCoroutine(TimerForUse(_useTriggerTime)); }
+
             if (!RayDetect().Equals(default(RaycastHit)))
             {
-                if ((RayDetect().collider.gameObject.TryGetComponent(out IUsable usableObj) && Input.GetMouseButtonDown(0) && !isDraging) && useIsAvailable)
+                if (RayDetect().collider.gameObject.TryGetComponent(out IUsable usableObj) && Input.GetMouseButtonUp(0) && _useTrigger && useIsAvailable && usableObj.isUsable)
                 {
                     Use(usableObj);
                 }
 
-                if (RayDetect().collider.gameObject.TryGetComponent(out ISelectable selectableObj)&&!isDraging&&selectIsAvailable)
+                if (RayDetect().collider.gameObject.TryGetComponent(out ISelectable selectableObj)&&selectIsAvailable&& selectableObj.isSelectable)
                 {
                     Select(selectableObj);
                 }
@@ -41,7 +45,7 @@ namespace CollectionCardGame.Gameplay
                     currentSelectObj = null;
                 }
 
-                if (RayDetect().collider.gameObject.TryGetComponent(out IDragable dragableObj) && Input.GetMouseButtonDown(0) && dragIsAvailable)
+                if (RayDetect().collider.gameObject.TryGetComponent(out IDragable dragableObj) && Input.GetMouseButtonDown(0) && dragIsAvailable&& dragableObj.isDragable)
                 {
                     currentDragableObj = dragableObj;
                     Drag(dragableObj);
@@ -58,9 +62,9 @@ namespace CollectionCardGame.Gameplay
                 Drag(currentDragableObj);
             }
             
-            if (Input.GetMouseButtonUp(0) && isDraging)
+            if (Input.GetMouseButtonUp(0))
             { 
-                Drop(currentDragableObj); 
+                if (currentDragableObj != null) { Drop(currentDragableObj); }
             }
         }
 
@@ -110,6 +114,13 @@ namespace CollectionCardGame.Gameplay
         private void Use(IUsable usableObj)
         {
             usableObj.Used?.Invoke();
+        }
+
+        private IEnumerator TimerForUse(float time)
+        {
+            _useTrigger = true;
+            yield return new WaitForSeconds(time);
+            _useTrigger = false;
         }
     }
 }

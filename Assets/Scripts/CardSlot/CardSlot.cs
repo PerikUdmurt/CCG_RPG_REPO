@@ -6,8 +6,8 @@ namespace CollectionCardGame.Gameplay
 {
     public class CardSlot : MonoBehaviour
     {
-        public Action<Card> Filled;
-        public Action Unfilled;
+        #region Fields
+        public Action<Card> Changed;
 
         [SerializeField]private Card _currentCard;
         public Card CurrentCard
@@ -16,64 +16,49 @@ namespace CollectionCardGame.Gameplay
             set 
             { 
                 _currentCard = value;
-                if (_currentCard != null) { Filled?.Invoke(_currentCard); }
-                else { Unfilled?.Invoke(); }
+                if (_currentCard != null) { Changed?.Invoke(_currentCard); }
+                else { Changed?.Invoke(null); }
             }
         }
+        #endregion
 
-        private void TakeCard()
+        #region Methods
+        public void SetDefaultState()
         {
-            TakeCard(_colCard);
-            _colCard = null;
+            LoseCard();
         }
 
-        private void TakeCard(Card card)
+
+        public void TakeCard(Card card)
         {
-            if (_currentCard != null) { ChangeCard(card); return; }
+            card.MoveTo(this.transform.position);
+            CurrentCard = card;
+            card.inCardSlot = true;
             card.Taken += LoseCard;
-            _currentCard = card;
-            card.transform.position = this.transform.position;
         }
 
-        private void LoseCard()
+        public void LoseCard()
         {
-            if (_currentCard == null) { return; }
-            _currentCard.Taken -= LoseCard;
-            _currentCard.Dropped -= TakeCard;
-            _colCard = _currentCard;
-            _currentCard = null;
-        }
-
-        private void ChangeCard(Card newCard)
-        {
-            
-        }
-
-        public Card _colCard;
-        private void OnTriggerEnter(Collider collision)
-        {
-            if (collision.gameObject.TryGetComponent(out Card card))
+            if (CurrentCard != null)
             {
-                if (card != _currentCard)
-                {
-                    _colCard = card;
-                    _colCard.Dropped += TakeCard;
-                }
+                CurrentCard.Taken -= LoseCard;
+                CurrentCard.inCardSlot = false;
+                CurrentCard = null;
             }
         }
 
-        private void OnTriggerExit(Collider collision)
+        public void SwapCard(Card newCard)
         {
-            if (collision.gameObject.TryGetComponent(out Card card))
-            {
-                if (card = _colCard)
-                {
-                    _colCard.Dropped -= TakeCard;
-                    _colCard = null;
-                }
-            }
-        }
+            CurrentCard.Taken -= LoseCard;
+            CurrentCard.inCardSlot = false;
+            CurrentCard.ReturnToStack();
+            CurrentCard = null;
 
+            TakeCard(newCard);
+        }
+        #endregion
+
+        #region ObjectPool
         public class Pool : MemoryPool<CardSlot> 
         {
             protected override void OnCreated(CardSlot item)
@@ -94,5 +79,6 @@ namespace CollectionCardGame.Gameplay
                 item.gameObject.SetActive(false);
             }
         }
+        #endregion
     }
 }
