@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b77d191726893884e8bcfe055cc92011, type: 3}
+  m_Name: Item
+  m_EditorClassIdentifier: 
+  sprite: {fileID: -353431470, guid: 5539c6fd43151214e8d28a4d404a5f49, type: 3}
+  _cardDescription: Item
+  _cardType: 5
+  _valueOfCard: 1
+  _effects: []
