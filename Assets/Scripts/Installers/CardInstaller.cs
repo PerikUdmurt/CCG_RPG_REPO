@@ -8,6 +8,7 @@ namespace CollectionCardGame.Infrastructure
     {
         [SerializeField] private CardSlot _slotPrefab;
         [SerializeField] private Card _cardPrefab;
+        [SerializeField] private HandController _handController;
         public CustomPool<Card> CardPool;
         public CustomPool<CardSlot> SlotPool;
 
@@ -23,6 +24,7 @@ namespace CollectionCardGame.Infrastructure
         {            
             Container.Bind<CardCreator>().AsSingle().NonLazy();
 
+            BindHand();
             BindStackOfCard();
             BindCardReciever();
             Bindpools();
@@ -51,6 +53,11 @@ namespace CollectionCardGame.Infrastructure
         {
             Container.Bind<Vector3>().FromInstance(_cardRecieverStartPoint).WhenInjectedInto<CardReciever>();
             Container.Bind<CardReciever>().AsSingle().NonLazy();
+        }
+
+        private void BindHand()
+        {
+            Container.Bind<HandController>().FromInstance(_handController);
         }
     }
 }

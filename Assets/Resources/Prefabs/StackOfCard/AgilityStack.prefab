@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 7270196824051498934}
   - component: {fileID: 2439280110336276469}
   - component: {fileID: 7460319566206852310}
-  - component: {fileID: 508391037630586559}
   - component: {fileID: -4674978586282322548}
   m_Layer: 3
   m_Name: AgilityStack
@@ -75,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1317594169
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d7109d44ee0c9984a8dae9cd11876e41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,18 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
---- !u!114 &508391037630586559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3325208924833291713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7539f4171717f7a41a561fbc87e435eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &-4674978586282322548
 MonoBehaviour:
   m_ObjectHideFlags: 0

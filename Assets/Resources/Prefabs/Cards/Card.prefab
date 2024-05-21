@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4999067355188334055}
   - component: {fileID: 1293072928906453919}
   - component: {fileID: 45159456314723266}
+  - component: {fileID: 4954423198638920347}
   m_Layer: 3
   m_Name: Card
   m_TagString: Untagged
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1783000137
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 1869539901, guid: 5539c6fd43151214e8d28a4d404a5f49, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -99,6 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45209ebfdd8b8a4a801040f2c6f5a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 0.5
+  inCardSlot: 0
   _cardConfiguration: {fileID: 11400000, guid: f01b8be80f3487c4ea8552b7a16b201a, type: 2}
   cardName: 
   description: 
@@ -133,5 +136,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a905d7f5515817f488f92cb6e2f12a80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4954423198638920347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8655198039765517458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78d3205ceb7f314c9606b48b93ac397, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

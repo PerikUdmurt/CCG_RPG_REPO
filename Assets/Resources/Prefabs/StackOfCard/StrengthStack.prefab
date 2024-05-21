@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 5931241679745521835}
   - component: {fileID: 4724664288393668201}
   - component: {fileID: 191670806452522795}
-  - component: {fileID: 8554774393247225772}
   - component: {fileID: 7737750397025601493}
   m_Layer: 3
   m_Name: StrengthStack
@@ -75,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1317594169
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d7109d44ee0c9984a8dae9cd11876e41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,18 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
---- !u!114 &8554774393247225772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3788612051978893135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7539f4171717f7a41a561fbc87e435eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7737750397025601493
 MonoBehaviour:
   m_ObjectHideFlags: 0

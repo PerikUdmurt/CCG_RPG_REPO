@@ -1,5 +1,5 @@
-using CollectionCardGame.Infrastructure;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace CollectionCardGame.Gameplay
@@ -8,12 +8,13 @@ namespace CollectionCardGame.Gameplay
     {
         private int _maxCardSlots;
         private CardSlot.Pool _slotPool;
+        private Card.Pool _cardPool;
         private Vector3 _entryPosition;
-        private List<CardSlot> _unfilledSlots = new List<CardSlot>();
-        private List<CardSlot> _filledSlots = new List<CardSlot>();
+        private HashSet<CardSlot> _slots = new HashSet<CardSlot>();
 
-        public CardReciever(CardSlot.Pool slotPool, Vector3 entryPosition)
+        public CardReciever(Card.Pool cardPool,CardSlot.Pool slotPool, Vector3 entryPosition)
         {
+            _cardPool = cardPool;
             _slotPool = slotPool;
             _entryPosition = entryPosition;
         }
@@ -21,8 +22,8 @@ namespace CollectionCardGame.Gameplay
         public void CreateCardSlot()
         {
             CardSlot currentSlot = _slotPool.Spawn();
-            _unfilledSlots.Add(currentSlot);
-            currentSlot.transform.position = _entryPosition + new Vector3((_unfilledSlots.Count + _filledSlots.Count) * 2, 0, 0);
+            _slots.Add(currentSlot);
+            currentSlot.transform.position = _entryPosition + new Vector3((_slots.Count) * 2, 0, 0);
         }
 
         public void CreateCardSlots(int num)
@@ -33,24 +34,21 @@ namespace CollectionCardGame.Gameplay
             }
         }
 
+        public void HideCardSlot(CardSlot slot) 
+        {
+            if (slot.CurrentCard != null)
+            { _cardPool.Despawn(slot.CurrentCard); }
+            slot.SetDefaultState();
+            _slotPool.Despawn(slot);
+            _slots.Remove(slot);
+        }
         public void HideAllCardSlots()
         {
-            foreach (CardSlot slot in _unfilledSlots)
+            int slotsCount = _slots.Count;
+            for (int i = 0; i< slotsCount; i++)
             {
-                _slotPool.Despawn(slot);
+                HideCardSlot(_slots.First());
             }
-            _unfilledSlots.Clear();
-
-            foreach (CardSlot slot in _filledSlots)
-            {
-                _slotPool.Despawn(slot);
-            }
-            _filledSlots.Clear();
-        }
-        
-        public List<CardSlot> ReadSlots()
-        {
-            return _filledSlots;
         }
         
     }

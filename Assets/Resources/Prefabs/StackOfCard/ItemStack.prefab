@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1299560404806680334}
   - component: {fileID: 8958169339400333364}
   - component: {fileID: 1560371919044248075}
-  - component: {fileID: 3674655984019283782}
   - component: {fileID: 3057101717425589121}
   m_Layer: 3
   m_Name: ItemStack
@@ -75,7 +74,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1317594169
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d7109d44ee0c9984a8dae9cd11876e41, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -122,18 +121,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
---- !u!114 &3674655984019283782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2230522525010824812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7539f4171717f7a41a561fbc87e435eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3057101717425589121
 MonoBehaviour:
   m_ObjectHideFlags: 0

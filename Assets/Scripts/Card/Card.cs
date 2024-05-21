@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using CollectionCardGame.Configurations;
 using Zenject;
-using CollectionCardGame.UI;
+using DG.Tweening;
+using Unity.VisualScripting;
 
 namespace CollectionCardGame.Gameplay
 {
@@ -11,6 +12,19 @@ namespace CollectionCardGame.Gameplay
     [RequireComponent(typeof(SpriteRenderer))]
     public class Card : MonoBehaviour, IDragable, ISelectable, IUsable
     {
+        //Тестовые переменные для мерок
+        public float moveSpeed;
+        private void Update()
+        {
+            if(Input.GetMouseButtonDown(1)) 
+            {
+                Debug.Log("return");
+                ReturnToStack();
+            }
+        }
+        [HideInInspector] public bool inCardSlot;
+
+        #region Fields
         #region InterfaceRealisation
         public Action Used {  get;  set; }
         public Action Taken { get; set; }
@@ -18,6 +32,9 @@ namespace CollectionCardGame.Gameplay
         public Action Selected { get; set; }
         public Action Deselected { get; set; }
         public Transform tf {  get; set; }
+        public bool isUsable { get; set; } = true;
+        public bool isDragable { get; set; } = true;
+        public bool isSelectable { get; set; } = true;
         #endregion
 
         private SpriteRenderer _spriteRenderer;
@@ -66,21 +83,40 @@ namespace CollectionCardGame.Gameplay
             get { return _cardEffects; } 
             set { _cardEffects = value; }
         }
+        #endregion
 
+        #region Methods
         private void Awake()
         {
+            
             tf = GetComponent<Transform>();
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
             if (_cardConfiguration != null)
             { UpdateInfo(_cardConfiguration); }
+
+            Used += Use;
+        }
+
+        public void MoveTo(Vector3 endPoint)
+        {
+            DOTween.Sequence().
+                Append(transform.DOMove(endPoint, moveSpeed, false).
+                SetEase(Ease.OutQuint));
         }
 
         public void ReturnToStack()
         {
             if (Stack != null)
             {
-                this.transform.position = new Vector3(Stack.transform.position.x, Stack.transform.position.y, Stack.transform.position.z - 1);
+                MoveTo(new Vector3(Stack.transform.position.x, Stack.transform.position.y, Stack.transform.position.z - 1));
+                Stack.AddToStack(this);
             }
+        }
+
+        private void Use()
+        {
+            Debug.Log("Used");
         }
 
         private void UpdateInfo(CardConfig config)
@@ -97,7 +133,9 @@ namespace CollectionCardGame.Gameplay
         {
 
         }
+        #endregion
 
+        #region ObjectPool
         public class Pool : MemoryPool<Card> 
         {
             protected override void OnCreated(Card item)
@@ -115,7 +153,8 @@ namespace CollectionCardGame.Gameplay
                 base.OnDespawned(item);
                 item.gameObject.SetActive(false);
             }
-        };
+        }
+        #endregion
     }
 
     public interface IDragable
@@ -123,17 +162,20 @@ namespace CollectionCardGame.Gameplay
         public Transform tf { get; set; }
         public Action Taken {  get; set; }
         public Action Dropped {  get; set; }
+        public bool isDragable { get; set; }
     }
 
     public interface ISelectable
     {
         public Action Selected { get; set; }
         public Action Deselected { get; set; }
+        public bool isSelectable { get; set; }
     }
 
     public interface IUsable
     {
         public Action Used { get; set; }
+        public bool isUsable { get; set; }
     }
 
     
