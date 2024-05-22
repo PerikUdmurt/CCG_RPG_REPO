@@ -4,7 +4,6 @@ using UnityEngine;
 using CollectionCardGame.Configurations;
 using Zenject;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 namespace CollectionCardGame.Gameplay
 {
@@ -12,17 +11,7 @@ namespace CollectionCardGame.Gameplay
     [RequireComponent(typeof(SpriteRenderer))]
     public class Card : MonoBehaviour, IDragable, ISelectable, IUsable
     {
-        //Тестовые переменные для мерок
-        public float moveSpeed;
-        private void Update()
-        {
-            if(Input.GetMouseButtonDown(1)) 
-            {
-                Debug.Log("return");
-                ReturnToStack();
-            }
-        }
-        [HideInInspector] public bool inCardSlot;
+        
 
         #region Fields
         #region InterfaceRealisation
@@ -40,6 +29,8 @@ namespace CollectionCardGame.Gameplay
         private SpriteRenderer _spriteRenderer;
         [SerializeField] private CardConfig _cardConfiguration;
 
+        [SerializeField] private float _moveSpeed;
+        [HideInInspector] public bool inCardSlot;
         public CardConfig CardConfiguration
         {
             get { return _cardConfiguration; }
@@ -101,7 +92,7 @@ namespace CollectionCardGame.Gameplay
         public void MoveTo(Vector3 endPoint)
         {
             DOTween.Sequence().
-                Append(transform.DOMove(endPoint, moveSpeed, false).
+                Append(transform.DOMove(endPoint, _moveSpeed, false).
                 SetEase(Ease.OutQuint));
         }
 

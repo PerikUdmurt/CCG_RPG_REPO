@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using Zenject;
+using CollectionCardGame.UI;
 
 namespace CollectionCardGame.Gameplay
 {
@@ -9,7 +10,8 @@ namespace CollectionCardGame.Gameplay
         #region Fields
         public Action<Card> Changed;
 
-        [SerializeField]private Card _currentCard;
+        [HideInInspector] public CardSlotPreview preview;
+        private Card _currentCard;
         public Card CurrentCard
         { 
             get { return _currentCard; }
@@ -23,6 +25,10 @@ namespace CollectionCardGame.Gameplay
         #endregion
 
         #region Methods
+        private void Awake()
+        {
+            if (preview == null) { preview = GetComponentInChildren<CardSlotPreview>(); }
+        }
         public void SetDefaultState()
         {
             LoseCard();

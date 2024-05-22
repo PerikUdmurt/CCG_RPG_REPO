@@ -100,9 +100,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45209ebfdd8b8a4a801040f2c6f5a81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 0.5
-  inCardSlot: 0
   _cardConfiguration: {fileID: 11400000, guid: f01b8be80f3487c4ea8552b7a16b201a, type: 2}
+  _moveSpeed: 0.5
+  inCardSlot: 0
   cardName: 
   description: 
 --- !u!65 &1293072928906453919

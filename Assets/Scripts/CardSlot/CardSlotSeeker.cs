@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.PlasticSCM.Editor.WebApi;
 using UnityEngine;
+using System;
 
 namespace CollectionCardGame.Gameplay
 {
@@ -10,10 +9,13 @@ namespace CollectionCardGame.Gameplay
     public class CardSlotSeeker: MonoBehaviour
     {
         #region Fields
+        public Action<CardSlot> SlotChanged;
+
         private Card _card;
 
         private HashSet<CardSlot> _slots = new HashSet<CardSlot>();
         private CardSlot _nearestSlot;
+        
         #endregion
 
 
@@ -26,6 +28,7 @@ namespace CollectionCardGame.Gameplay
         private void OnEnable()
         {
             _card.Dropped += CheckCardSlot;
+            SlotChanged += SwitchPrevew;
         }
 
         private void OnDisable()
@@ -35,11 +38,29 @@ namespace CollectionCardGame.Gameplay
 
         private void Update()
         {
-            if (!_card.inCardSlot&&_slots.Count > 0) 
+            if (!_card.inCardSlot) 
             { 
-                _nearestSlot = FindNearestSlot(_slots); 
+                _nearestSlot = FindNearestSlot(_slots);
             }
         }
+
+        private void SwitchPrevew(CardSlot newSlot)
+        {
+            if (_nearestSlot != null) { HidePreview(_nearestSlot); }
+            if (newSlot != null) { ShowPreview(newSlot); }
+        }
+
+        private void ShowPreview(CardSlot slot)
+        {
+            if (slot.CurrentCard != null) { _nearestSlot.preview.ShowSwapCardPreview(_card); }
+            else { slot.preview.ShowSetCardPreview(_card); }
+        }
+
+        private void HidePreview(CardSlot slot)
+        {
+            slot.preview.CardPreviewAnimation(0);
+        }
+
 
         private void CheckCardSlot()
         {
@@ -57,6 +78,7 @@ namespace CollectionCardGame.Gameplay
                 float currentDistance = (this.transform.position - slots.ElementAt(i).transform.position).magnitude;
                 if (currentDistance < minDistance) { minDistance = currentDistance; nearestSlot = slots.ElementAt(i); }
             }
+            if (nearestSlot != _nearestSlot) { SlotChanged?.Invoke(nearestSlot); }
             return nearestSlot;
         }
 
