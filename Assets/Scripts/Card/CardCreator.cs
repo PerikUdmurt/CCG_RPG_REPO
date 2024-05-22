@@ -32,7 +32,6 @@ namespace CollectionCardGame.Infrastructure
             card.CardConfiguration = config;
             card.Stack = SetStackOfCard(config.Type);
             card.ReturnToStack();
-            Debug.Log("Spawned");
         }
 
         private StackOfCard SetStackOfCard(CardConfig.CardType type)
