@@ -52,8 +52,7 @@ namespace CollectionCardGame.Gameplay
 
         private void ShowPreview(CardSlot slot)
         {
-            if (slot.CurrentCard != null) { _nearestSlot.preview.ShowSwapCardPreview(_card); }
-            else { slot.preview.ShowSetCardPreview(_card); }
+             slot.preview.ShowSetCardPreview(_card);
         }
 
         private void HidePreview(CardSlot slot)

@@ -32,6 +32,10 @@ namespace CollectionCardGame.Gameplay
         public void SetDefaultState()
         {
             LoseCard();
+            if (preview != null)
+            {
+                preview.CardPreviewAnimation(0);
+            }
         }
 
 
