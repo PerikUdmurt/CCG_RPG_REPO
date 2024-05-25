@@ -26,11 +26,10 @@ namespace CollectionCardGame.Gameplay
         
         private void RayCheck()
         {
-            if (Input.GetMouseButtonDown(0)) { StartCoroutine(TimerForUse(_useTriggerTime)); }
 
             if (!RayDetect().Equals(default(RaycastHit)))
             {
-                if (RayDetect().collider.gameObject.TryGetComponent(out IUsable usableObj) && Input.GetMouseButtonUp(0) && _useTrigger && useIsAvailable && usableObj.isUsable)
+                if (RayDetect().collider.gameObject.TryGetComponent(out IUsable usableObj) && Input.GetMouseButtonUp(0) && useIsAvailable && usableObj.isUsable)
                 {
                     Use(usableObj);
                 }
@@ -113,7 +112,7 @@ namespace CollectionCardGame.Gameplay
 
         private void Use(IUsable usableObj)
         {
-            usableObj.Used?.Invoke();
+            usableObj.Use();
         }
 
         private IEnumerator TimerForUse(float time)

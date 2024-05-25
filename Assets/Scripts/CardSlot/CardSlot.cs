@@ -8,18 +8,22 @@ namespace CollectionCardGame.Gameplay
     public class CardSlot : MonoBehaviour
     {
         #region Fields
-        public Action<Card> Changed;
+        public event Action Changed;
 
         [HideInInspector] public CardSlotPreview preview;
         private Card _currentCard;
+
+        #endregion
+
+        #region Properties
         public Card CurrentCard
-        { 
+        {
             get { return _currentCard; }
-            set 
-            { 
+            set
+            {
                 _currentCard = value;
-                if (_currentCard != null) { Changed?.Invoke(_currentCard); }
-                else { Changed?.Invoke(null); }
+                if (_currentCard != null) { Changed?.Invoke(); }
+                else { Changed?.Invoke(); }
             }
         }
         #endregion

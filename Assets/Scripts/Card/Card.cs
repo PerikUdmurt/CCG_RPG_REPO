@@ -11,11 +11,11 @@ namespace CollectionCardGame.Gameplay
     [RequireComponent(typeof(SpriteRenderer))]
     public class Card : MonoBehaviour, IDragable, ISelectable, IUsable
     {
-        
+
 
         #region Fields
         #region InterfaceRealisation
-        public Action Used {  get;  set; }
+        public event Action Used;
         public Action Taken { get; set; }
         public Action Dropped { get; set; }
         public Action Selected { get; set; }
@@ -26,11 +26,22 @@ namespace CollectionCardGame.Gameplay
         public bool isSelectable { get; set; } = true;
         #endregion
 
-        private SpriteRenderer _spriteRenderer;
-        [SerializeField] private CardConfig _cardConfiguration;
-
-        [SerializeField] private float _moveSpeed;
         [HideInInspector] public bool inCardSlot;
+        [HideInInspector] public string cardName;
+        [HideInInspector] public string description;
+        [SerializeField] private float _moveSpeed;
+
+        private SpriteRenderer _spriteRenderer;
+        private CardConfig _cardConfiguration;
+        private StackOfCard _stack;
+        private int _value;
+        private CardConfig.CardType _type;
+        private List<CardEffect> _cardEffects;
+        
+        #endregion
+
+        #region Properties
+
         public CardConfig CardConfiguration
         {
             get { return _cardConfiguration; }
@@ -40,38 +51,32 @@ namespace CollectionCardGame.Gameplay
                 UpdateInfo(value);
             }
         }
-        private StackOfCard _stack;
+
         public StackOfCard Stack
         {
             get { return _stack; }
             set { _stack = value; }
         }
 
-        [HideInInspector] public string cardName;
-        [HideInInspector] public string description;
-
-        private int _value;
-        public int Value
-        {
-            get { return _value; }
-            set 
-            { 
-                _value = value;
-                if (_value < 0) _value = 0;
-            }
-        }
-
-        private CardConfig.CardType _type;
         public CardConfig.CardType Type
         {
             get { return _type; }
             private set { _type = value; }
         }
-        
-        private List<CardEffect> _cardEffects;
+
+        public int Value
+        {
+            get { return _value; }
+            set
+            {
+                _value = value;
+                if (_value < 0) _value = 0;
+            }
+        }
+
         public List<CardEffect> Effects
-        { 
-            get { return _cardEffects; } 
+        {
+            get { return _cardEffects; }
             set { _cardEffects = value; }
         }
         #endregion
@@ -105,7 +110,7 @@ namespace CollectionCardGame.Gameplay
             }
         }
 
-        private void Use()
+        public void Use()
         {
             Debug.Log("Used");
         }
@@ -151,8 +156,8 @@ namespace CollectionCardGame.Gameplay
     public interface IDragable
     {
         public Transform tf { get; set; }
-        public Action Taken {  get; set; }
-        public Action Dropped {  get; set; }
+        public Action Taken { get; set; }
+        public Action Dropped { get; set; }
         public bool isDragable { get; set; }
     }
 
@@ -165,7 +170,8 @@ namespace CollectionCardGame.Gameplay
 
     public interface IUsable
     {
-        public Action Used { get; set; }
+        public void Use();
+        public event Action Used;
         public bool isUsable { get; set; }
     }
 
