@@ -32,7 +32,6 @@ namespace CollectionCardGame.Gameplay
 
         private void UpdateInfo()
         {
-            Debug.Log("asas");
             Updated?.Invoke();
         }
 

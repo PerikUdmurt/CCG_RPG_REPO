@@ -1,9 +1,6 @@
-using CollectionCardGame.Gameplay;
-using CollectionCardGame.UI;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -17,22 +14,19 @@ public class BootstrapEntryPoint : MonoBehaviour
     private Task[] tasks;
 
     private AsyncOperation asyncOperation;
-    private int fieldForCalculation;
 
-    public Transform _transform;
     private void Start()
     {
         tasks = new Task[]
         {
-            SetImage(),
-            LoadResources("Prefab/Cards/Card"),
             LoadScene("MainMenuScene"),
+            SetImage(),
             DoSomething(1000),
             DoSomething(4000),
             DoSomething(3000),
-            DoSomething(10000),
-            Task.Run(() => {fieldForCalculation = Calculation(12); })
+            DoSomething(10000)
         };
+        //ChangeProgressBarValue();
 
         SwitchScene();
     }
@@ -51,10 +45,14 @@ public class BootstrapEntryPoint : MonoBehaviour
 
         var asyncOp = request.SendWebRequest();
 
-        while (asyncOp.isDone == false) { await Task.Delay(1000 / 30); }
-        Debug.Log($"Картинка загружена. Метод закончил отрабатывать в потоке{Thread.CurrentThread.ManagedThreadId}");
-        return DownloadHandlerTexture.GetContent(request);
-    
+        while (asyncOp.isDone == false) { await Task.Delay(1000 / 30);}
+        if (request.isNetworkError || request.isHttpError)
+        { Debug.Log(request.error); return null; }
+        else
+        {
+            Debug.Log($"Картинка загружена. Метод закончил отрабатывать в потоке{Thread.CurrentThread.ManagedThreadId}");
+            return DownloadHandlerTexture.GetContent(request);
+        }
     }
     
     private async Task DoSomething(int time)    //Симуляция долгой и тяжелой работы
@@ -80,14 +78,6 @@ public class BootstrapEntryPoint : MonoBehaviour
         asyncOperation.allowSceneActivation = true;
     }
 
-    private async Task LoadResources(string path)
-    {
-        await Task.Yield();
-        ResourceRequest request = Resources.LoadAsync(path);
-        Debug.Log("Ресурс загружен");
-        ChangeProgressBarValue();
-    }
-
     private void ChangeProgressBarValue()
     {
         int completedTasks = 0;
@@ -95,15 +85,8 @@ public class BootstrapEntryPoint : MonoBehaviour
         {
             if (task.IsCompleted) completedTasks++;
         }
-        var result = (completedTasks + 1f) / tasks.Length;
+        var result = completedTasks + 1f / tasks.Length;
         _progressBar.Value = result;
-    }
-
-    private int Calculation(int a)
-    {
-        a = a * a;
-        Thread.Sleep(1100);     //Симуляция сложных и долгих вычислений
-        Debug.Log($"Произведены вычисления в потоке {Thread.CurrentThread.ManagedThreadId} с результатом {a}");
-        return a;
+        Debug.Log(result);
     }
 }

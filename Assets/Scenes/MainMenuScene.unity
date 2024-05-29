@@ -149,7 +149,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4227977613701114954, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
   m_PrefabInstance: {fileID: 4871304466996443640}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2032980879}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd71374e3f027934782b52ffc90ee0eb, type: 3}
@@ -855,6 +855,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2032980879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2635618600442812294, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
+  m_PrefabInstance: {fileID: 4871304466996443640}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2032980882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2032980879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9b2545935fe292479912c67caf36186, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2099492279
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,9 +996,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1805597504}
     m_Modifications:
+    - target: {fileID: 1531042604995759100, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: 0fc7dc0214ff1a64cbb52727725a2bfa, type: 2}
     - target: {fileID: 2635618600442812294, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
       propertyPath: m_Name
       value: Solution
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227977613701114954, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
+      propertyPath: longPressTime
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4227977613701114954, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
+      propertyPath: rectTransform
+      value: 
+      objectReference: {fileID: 547944478}
+    - target: {fileID: 4227977613701114954, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
+      propertyPath: isInteractable
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4254087230381306924, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
       propertyPath: m_Pivot.x
@@ -1066,7 +1099,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2635618600442812294, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2032980882}
   m_SourcePrefab: {fileID: 100100000, guid: 6fce026a6554386449979187d8a5e3a6, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -4,27 +4,73 @@ using UnityEngine.EventSystems;
 using TMPro;
 using Zenject;
 using UnityEngine.Events;
+using System.Threading.Tasks;
+using System.Threading;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 namespace CollectionCardGame.UI
 {
     public class MyButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         public TextMeshProUGUI buttonText;
+        public bool isInteractable = true;
+        public int longPressTime;
         public RectTransform rectTransform;
 
-        public UnityEvent<MyButton> clicked;
-        public UnityEvent<MyButton> unclicked;
+        public event Action clicked;
+        public event Action unclicked;
+        public event Action longPressed;
+        public event Action longPressedCancelled;
+
+        private CancellationTokenSource _cts = new CancellationTokenSource();
+        private CancellationToken _token;
+        private bool _pressed;
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            clicked?.Invoke(this);
-            Debug.Log("Click");
+            
+            if (!isInteractable) return;
+            clicked?.Invoke();
+            _cts.Dispose();
+            _cts = new CancellationTokenSource();
+            _token = _cts.Token;
+            _token.Register(() => { CancelLongPress(); });
+            ConfirmLongPress();
+            _pressed = true;
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            unclicked?.Invoke(this);
-            Debug.Log("unclicked");
+            if (!isInteractable) return;
+            unclicked?.Invoke();
+            _cts.Cancel();
+        }
+
+        private async Task<bool> LongPress(CancellationToken token)
+        {
+            if (!isInteractable) return false;
+            await Task.Delay(longPressTime);
+            if (token.IsCancellationRequested) return false;
+            return true;
+        }
+
+        private async void ConfirmLongPress()
+        {
+            bool isConfirmed = await LongPress(_token);
+            if (isConfirmed)
+            {
+                Debug.Log("LONGPRESSED");
+                longPressed?.Invoke();
+                _pressed = false;
+            }
+        }
+
+        private void CancelLongPress()
+        {
+            if (!_pressed) return;
+            Debug.Log("CANCELLED");
+            longPressedCancelled?.Invoke();
+            _pressed = false;
         }
 
         public class Pool : MemoryPool<MyButton>

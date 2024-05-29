@@ -10,7 +10,7 @@ namespace CollectionCardGame.Infrastructure
         [SerializeField] private MyButton _myButtonPrefab;
         [SerializeField] private RectTransform _HintsEntryPos;
         [SerializeField] private HintUI _hintPrefab;
-
+        [SerializeField] private MenuButtonModel _buttonManager;
 
         public override void InstallBindings()
         {
@@ -39,8 +39,9 @@ namespace CollectionCardGame.Infrastructure
 
         private void BindButtons()
         {
+            Container.Bind<ButtonManager>().AsSingle().NonLazy();
             Container.Bind<RectTransform>().FromInstance(_ButtonEntryPos).WhenInjectedInto<ButtonManager>();
-            Container.Bind<MenuButtonModel>().AsSingle().NonLazy();
+            Container.Bind<MenuButtonModel>().FromInstance(_buttonManager);
         }
     }
 }

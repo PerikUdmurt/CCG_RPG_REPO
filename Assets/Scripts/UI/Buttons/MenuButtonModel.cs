@@ -38,7 +38,7 @@ namespace CollectionCardGame.UI
 
         private void HideSolution()
         {
-            Debug.Log("HideSolution");
+            
         }
 
     }

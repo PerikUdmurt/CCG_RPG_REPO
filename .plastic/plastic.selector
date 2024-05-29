@@ -1,4 +1,3 @@
-repository "MyPetProject@unity_7402C1D66C8A3F31CA43@cloud"
+rep "MyPetProject@unity_7402C1D66C8A3F31CA43@cloud"
   path "/"
-    smartbranch "/main/Periks _Features" 
-     
+    smartbranch "/main/Periks _Features"
