@@ -9,8 +9,6 @@ namespace CollectionCardGame.Infrastructure
         [SerializeField] private CardSlot _slotPrefab;
         [SerializeField] private Card _cardPrefab;
         [SerializeField] private HandController _handController;
-        public CustomPool<Card> CardPool;
-        public CustomPool<CardSlot> SlotPool;
 
         [SerializeField] private StackOfCard _healthStackOfCard;
         [SerializeField] private StackOfCard _strengthStackOfCard;
@@ -20,6 +18,7 @@ namespace CollectionCardGame.Infrastructure
         [SerializeField] private StackOfCard _itemStackOfCard;
 
         [SerializeField] private Vector3 _cardRecieverStartPoint;
+        
         public override void InstallBindings()
         {            
             Container.Bind<CardCreator>().AsSingle().NonLazy();

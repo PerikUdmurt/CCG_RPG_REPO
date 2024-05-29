@@ -1,26 +1,33 @@
 using UnityEngine;
 using Zenject;
 using CollectionCardGame.UI;
-using CollectionCardGame.Infrastructure;
 
 namespace CollectionCardGame.Infrastructure
 {
     public class UIInstaller : MonoInstaller
     {
+        [SerializeField] private RectTransform _ButtonEntryPos;
+        [SerializeField] private MyButton _myButtonPrefab;
         [SerializeField] private RectTransform _HintsEntryPos;
         [SerializeField] private HintUI _hintPrefab;
+        [SerializeField] private MenuButtonModel _buttonManager;
 
         public override void InstallBindings()
         {
-            BindPool();
+            BindPools();
             BindHints();
+            BindButtons();
         }
 
-        private void BindPool() 
+        private void BindPools() 
         {
             Container.BindMemoryPool<HintUI, HintUI.Pool>()
                 .WithInitialSize(2)
                 .FromComponentInNewPrefab(_hintPrefab);
+
+            Container.BindMemoryPool<MyButton, MyButton.Pool>()
+                .WithInitialSize(2)
+                .FromComponentInNewPrefab(_myButtonPrefab);
         }
 
 
@@ -28,6 +35,13 @@ namespace CollectionCardGame.Infrastructure
         {
             Container.Bind<HintManager>().AsSingle().NonLazy();
             Container.Bind<RectTransform>().FromInstance(_HintsEntryPos).WhenInjectedInto<HintManager>();
+        }
+
+        private void BindButtons()
+        {
+            Container.Bind<ButtonManager>().AsSingle().NonLazy();
+            Container.Bind<RectTransform>().FromInstance(_ButtonEntryPos).WhenInjectedInto<ButtonManager>();
+            Container.Bind<MenuButtonModel>().FromInstance(_buttonManager);
         }
     }
 }

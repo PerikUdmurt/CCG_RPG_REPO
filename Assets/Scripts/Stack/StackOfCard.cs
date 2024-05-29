@@ -9,7 +9,7 @@ namespace CollectionCardGame.Gameplay
     {
         #region Fields
         #region InterfaceRealisation
-        public Action Used {  get; set; }
+        public event Action Used;
         public Action Selected { get; set; }
         public Action Deselected { get; set; }
         public bool isUsable { get; set; } = true;
@@ -21,11 +21,12 @@ namespace CollectionCardGame.Gameplay
         #endregion
 
         #region Methods
-        private void OnEnable()
-        {
-            Used += ShowCard;
-        }
 
+        public void Use()
+        {
+            ShowCard();
+            Used?.Invoke();
+        }
 
         public void AddToStack(Card card)
         {

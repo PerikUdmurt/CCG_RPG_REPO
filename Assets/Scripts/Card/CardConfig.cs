@@ -27,7 +27,12 @@ namespace CollectionCardGame
 
         public enum CardType
         {
-            Health, Strenght, Agility, Intellect, Charisma, Item
+            Health = 0, 
+            Strenght = 1, 
+            Agility = 2, 
+            Intellect = 3,
+            Charisma = 4,
+            Item = 5
         }
 
         [SerializeField]private CardType _cardType;

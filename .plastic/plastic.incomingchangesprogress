@@ -1,0 +1,52 @@
+[
+  {
+    "MountId": "56e62dd7-241f-41e9-8c6b-dd4ca4513e62",
+    "AncestorCsetIds": [
+      6
+    ],
+    "SourceCsetId": 7,
+    "DestinationCsetId": 6,
+    "FileConflicts": [
+      {
+        "Path": "/Assets/Scenes/MainMenuScene.unity",
+        "ItemId": 13582,
+        "ParentItemId": 2102,
+        "BaseRevId": 13525,
+        "SourceRevId": 13720,
+        "DestinationRevId": 13525
+      },
+      {
+        "Path": "/Assets/Scripts/CardSlot/CardReciever.cs",
+        "ItemId": 2227,
+        "ParentItemId": 2136,
+        "BaseRevId": 13536,
+        "SourceRevId": 13721,
+        "DestinationRevId": 13536
+      },
+      {
+        "Path": "/Assets/Scripts/UI/Buttons/ButtonManager.cs",
+        "ItemId": 13633,
+        "ParentItemId": 13619,
+        "BaseRevId": 13542,
+        "SourceRevId": 13727,
+        "DestinationRevId": 13542
+      },
+      {
+        "Path": "/Assets/Scripts/UI/Buttons/MenuButtonModel.cs",
+        "ItemId": 13635,
+        "ParentItemId": 13619,
+        "BaseRevId": 13544,
+        "SourceRevId": 13728,
+        "DestinationRevId": 13544
+      },
+      {
+        "Path": "/Assets/Scripts/UI/Buttons/MyButton.cs",
+        "ItemId": 13637,
+        "ParentItemId": 13619,
+        "BaseRevId": 13546,
+        "SourceRevId": 13729,
+        "DestinationRevId": 13546
+      }
+    ]
+  }
+]

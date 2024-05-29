@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -6,6 +7,8 @@ namespace CollectionCardGame.Gameplay
 {
     public class CardReciever
     {
+        public event Action Updated;
+
         private int _maxCardSlots;
         private CardSlot.Pool _slotPool;
         private Card.Pool _cardPool;
@@ -23,7 +26,23 @@ namespace CollectionCardGame.Gameplay
         {
             CardSlot currentSlot = _slotPool.Spawn();
             _slots.Add(currentSlot);
-            currentSlot.transform.position = _entryPosition + new Vector3((_slots.Count) * 2, 0, 0);
+            currentSlot.Changed += UpdateInfo;
+            currentSlot.transform.position = _entryPosition + new Vector3((_slots.Count - 1) * 2, 0, 0);
+        }
+
+        private void UpdateInfo()
+        {
+            Updated?.Invoke();
+        }
+
+        public List<Card> GetCombination()
+        {
+            List<Card> result = new List<Card>();
+            foreach (CardSlot slot in _slots)
+            {
+                result.Add(slot.CurrentCard);
+            }
+            return result;
         }
 
         public void CreateCardSlots(int num)
@@ -39,6 +58,7 @@ namespace CollectionCardGame.Gameplay
             if (slot.CurrentCard != null)
             { _cardPool.Despawn(slot.CurrentCard); }
             slot.SetDefaultState();
+            slot.Changed -= UpdateInfo;
             _slotPool.Despawn(slot);
             _slots.Remove(slot);
         }
@@ -50,6 +70,5 @@ namespace CollectionCardGame.Gameplay
                 HideCardSlot(_slots.First());
             }
         }
-        
     }
 }
